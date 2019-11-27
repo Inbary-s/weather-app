@@ -4,22 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://kit.fontawesome.com/00fbdd65c7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="assets/style.css" />
-    <title>Document</title>
+    <title>Weather Dashboard</title>
 </head>
 <body>
     <div class="row"><h1>Weather Dashboard</h1></div>
     
     <div class="row">
-        <div class="col-md">
-            <div class="row">Search Bar</div>
-            <div>Cities</div>
+        <div class="col-4">
+            <div class="row">
+                <h5>Search for a City</h5>
+            </div>
+            <div class="row">
+                <input type="text" id="search">
+                <button class="btn" id="sBtn">
+                    <i class="fas fa-search-location"></i></button>
+            </div>
+            <div class="cities"></div>
         </div>
         
         <div class="col">
-            <div class="row"> City INFO</div>
-            <div class="row"> 5 day</div>
+            <div class="card" style="height: 196px;">
+                <div id="cityInfo"></div> <div class="icon"><img></div>
+                <div id= "temp"></div>
+                <div id= "humidity"></div>
+                <div id= "wind"></div>
+                <div id= "uv"></div>
+            </div>
+
+            <div class="card"> <h4>5 day Forecast:</h4></div>
         </div>
     </div>
     
@@ -28,6 +43,8 @@
     src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
     crossorigin="anonymous"></script>
+    <script src="assets/moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="assets/function.js"></script>
 </body>
 </html>

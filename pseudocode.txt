@@ -1,0 +1,17 @@
+SEARCH - 
+- left hand side create a search form: 
+- - Add input field to the HTML and id it
+- - Function: 
+    searchInput.val sitches in the query URL for search
+
+    queryURL - every time trigerred, add city to head of city list (appending to the city [])
+    queryURL - every time trigerred, present the following data for that city:
+    - Temp'
+    - Humidity
+    - Wind Speed
+    - UV index
+    - 5 day forecast (another ajax call?) - include:
+        -- date
+        -- little weather icon (sun, clouds, etc.)
+        -- median temp'
+        -- median humiditiy

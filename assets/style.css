@@ -1,3 +1,21 @@
 body{
     margin: 5%;
 }
+.btn{
+    background-color: rgba(0, 217, 255, 0.315);
+    margin-left: 10px;
+    color: rgb(98, 74, 233);
+}
+i {
+    color: rgb(98, 74, 233);
+    font-size: 20px;
+}
+.cities{
+    margin-top: 5%;
+}
+.card {
+    padding: 5%;
+}
+p {
+    line-height: 1.5;
+}
