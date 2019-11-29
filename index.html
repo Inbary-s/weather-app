@@ -7,11 +7,12 @@
     <script src="https://kit.fontawesome.com/00fbdd65c7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="assets/reset.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/style.css" />
     <title>Weather Dashboard</title>
 </head>
 <body>
-    <div class="row"><h1>Weather Dashboard</h1></div>
+    <div class="row" id = "header"><h1>Weather Dashboard</h1></div>
     
     <div class="row">
         <div class="col-3" id = "cities">
@@ -27,8 +28,8 @@
         </div>
         
         <div class="col">
-            <div class="card" style="height: auto;">
-                <div><div style='float:left' id="cityInfo">Hello!</div><span style='float:left'><img id='icon'></span></div>
+            <div class="card" id = "today" style="height: auto;">
+                <div><div style='float:left' id="cityInfo"></div><span style='float:left'><img id='icon'></span></div>
                 <div id= "temp"></div>
                 <div id= "humidity"></div>
                 <div id= "wind"></div>

@@ -17,7 +17,6 @@ $(document).ready(function() {
         a.insertBefore(storageCitiesArr[i]);
       } 
     });
-    
 // SEARCH -
 $("#sBtn").on("click", function(event) {
   event.preventDefault();
@@ -25,6 +24,9 @@ $("#sBtn").on("click", function(event) {
   cities.push(city);
   renderCities();
   handleAPI($("#search").val());
+  // Save to localStorage
+  localStorage.setItem("cities", cities); 
+  console.log("you stored ", localStorage.getItem("cities", cities));
 });
 // City buttons functionality
 $(document).on('click', '.city', function(e){
@@ -55,8 +57,8 @@ handleAPI = term => {
     $("#cityInfo").html(cityName);
     $("#humidity").text("Humidity: " + response.main.humidity);
     $("#wind").text("Wind Speed: " + response.wind.speed);
-    // UV Index;
     console.log(temp);
+    // UV Index;
     queryURLuv = "http://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=" + lat + "&lon=" + lon;
     $.ajax({
       url: queryURLuv,
@@ -76,47 +78,41 @@ handleAPI = term => {
           $('#num').addClass('red');
         }
       }
+      // 5 Day forecast
+          var forecastTerm = ($("#search").val() || $('.city').attr('data-name'));
+          var forecastArr = [];
+  
+          $.ajax({
+              url: `http://api.openweathermap.org/data/2.5/forecast?q=${forecastTerm}&appid=${apiKey}&mode=json`,
+              method: "GET"
+          })
+          .then(data => {
+              for (i = 5; i < 40; i += 8) {
+                  forecastArr.push(data.list[i]);
+                  if (i === 37) {
+                      console.log(forecastArr);
+                      appendForecast(forecastArr);
+                  }
+              }
+          })
+          // for loop to select the hour to forecast
+          .catch(err => console.log(err));
+      });
+      //append forecast to cards
+      appendForecast = arr => {
+          $('#forecast').html('')
+          arr.map(item => {
+              var forecastDateArr = ((item.dt_txt).split(' '));
+              console.log(forecastDateArr);
+              var forecastDate = forecastDateArr[0];
+              $("#forecast").append(`<div class='card forecastCard'><h6>${forecastDate}</h6>
+              <img src='http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png'>
+              <p>Temp ${parseFloat((item.main.temp - 273.15) * 1.8 + 32).toFixed(2)}</p>
+              <p>Humidity: ${item.main.humidity}</p>`);
+          });
+      };
     });
-    // 5 Day forecast
-        var forecastTerm = ($("#search").val() || $('.city').attr('data-name'));
-        var forecastArr = [];
-
-        $.ajax({
-            url: `http://api.openweathermap.org/data/2.5/forecast?q=${forecastTerm}&appid=${apiKey}&mode=json`,
-            method: "GET"
-        })
-        .then(data => {
-            for (i = 5; i < 40; i += 8) {
-                forecastArr.push(data.list[i]);
-                if (i === 37) {
-                    console.log(forecastArr);
-                    appendForecast(forecastArr);
-                }
-            }
-        })
-        // for loop to select the hour to forecast
-        .catch(err => console.log(err));
-    });
-    //append forecast to cards
-    appendForecast = arr => {
-        $('#forecast').html('')
-        arr.map(item => {
-            var forecastDateArr = ((item.dt_txt).split(' '));
-            console.log(forecastDateArr);
-            var forecastDate = forecastDateArr[0];
-            $("#forecast").append(`<div class='card forecastCard'><h6>${forecastDate}</h6>
-            <img src='http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png'>
-            <p>Temp ${parseFloat((item.main.temp - 273.15) * 1.8 + 32).toFixed(2)}</p>
-            <p>Humidity: ${item.main.humidity}</p>`);
-        });
-    };
 };
-// Save to localStorage
-$("#sBtn").on("click", function(e) {
-    e.preventDefault();
-    localStorage.setItem("cities", cities); 
-    console.log("you stored ", localStorage.getItem("cities", cities));
-  });
 // Render cities array
 function renderCities() {
   $(".cities").empty();

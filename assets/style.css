@@ -1,5 +1,8 @@
-body{
-    margin: 5%;
+body {
+    font-family:'Poppins', sans-serif;
+}
+.row{
+    margin: 2%;
 }
 .btn{
     background-color: rgba(0, 217, 255, 0.315);
@@ -17,14 +20,24 @@ i {
     font-size: 20px;
 }
 h1{
-    background-color: rebeccapurple;
+    background-color: rgb(0, 217, 255);
+    width: 100%;
     color: white;
+    text-align: center;
+    padding: 2%;
+}
+#header {
+    margin: 0;
+}
+.card {
+    border: none;
 }
 .cities{
     margin: 5%;
 }
 #cities {
     padding: 0;
+    background-color: rgba(0, 217, 255, 0.13);;
 }
 .card {
     padding: 5%;
@@ -37,12 +50,12 @@ p {
     margin-top: -30px;
 }
 img {
-    width: 100px;
+    width: 60px;
 }
 .forecastCard {
     background-color: rgba(0, 217, 255, 0.945);
     color: white;
-    padding: 6px;
+    padding: 2%;
     margin: 3px;
     border-radius: 10px;
     float: left;
