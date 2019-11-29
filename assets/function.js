@@ -29,8 +29,8 @@ $("#sBtn").on("click", function(event) {
 // City buttons functionality
 $(document).on('click', '.city', function(e){
     e.preventDefault()
-    console.log($(this).attr('data-name'))
-    handleAPI($(this).attr('data-name'))
+    console.log($(this).attr('data-name'));
+    handleAPI($(this).attr('data-name'));
 })
 // get all weather info
 handleAPI = term => {
@@ -66,36 +66,37 @@ handleAPI = term => {
       $("#uv").text("UV Index: " + response[0].value);
     });
     // 5 Day forecast
-      var forecastTerm = (($("#search").val()) || ($('.city').attr('data-name')));
-      var forecastArr = [];
-      $.ajax({
-        url: `http://api.openweathermap.org/data/2.5/forecast?q=${forecastTerm}&appid=${apiKey}&mode=json`,
-        method: "GET"
-      })
-      // for loop to select the hour to forecast
+        var forecastTerm = ($("#search").val() || $('.city').attr('data-name'));
+        var forecastArr = [];
+
+        $.ajax({
+            url: `http://api.openweathermap.org/data/2.5/forecast?q=${forecastTerm}&appid=${apiKey}&mode=json`,
+            method: "GET"
+        })
         .then(data => {
-          for (i = 4; i < 40; i += 8) {
-            forecastArr.push(data.list[i]);
-            if (i === 36) {
-              console.log(forecastArr);
-              appendForecast(forecastArr);
+            for (i = 5; i < 40; i += 8) {
+                forecastArr.push(data.list[i]);
+                if (i === 37) {
+                    console.log(forecastArr);
+                    appendForecast(forecastArr);
+                }
             }
-        }
-    })
-    .catch(err => console.log(err));
+        })
+        // for loop to select the hour to forecast
+        .catch(err => console.log(err));
     });
     //append forecast to cards
     appendForecast = arr => {
         $('#forecast').html('')
-      arr.map(item => {
-        var forecastDateArr = ((item.dt_txt).split(' '));
-        console.log(forecastDateArr);
-        var forecastDate = forecastDateArr[0];
-        $("#forecast").append(`<div class='card forecastCard'><h6>${forecastDate}</h6>
-        <img src='http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png'>
-        <p>Temp ${parseFloat((item.main.temp - 273.15) * 1.8 + 32).toFixed(2)}</p>
-        <p>Humidity: ${item.main.humidity}</p>`);
-      });
+        arr.map(item => {
+            var forecastDateArr = ((item.dt_txt).split(' '));
+            console.log(forecastDateArr);
+            var forecastDate = forecastDateArr[0];
+            $("#forecast").append(`<div class='card forecastCard'><h6>${forecastDate}</h6>
+            <img src='http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png'>
+            <p>Temp ${parseFloat((item.main.temp - 273.15) * 1.8 + 32).toFixed(2)}</p>
+            <p>Humidity: ${item.main.humidity}</p>`);
+        });
     };
 };
 // Save to localStorage
@@ -119,5 +120,4 @@ function renderCities() {
     console.log("you stored ", localStorage.getItem("cities", cities));
   }
 }
-
 renderCities();

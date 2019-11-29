@@ -41,3 +41,25 @@ img {
     width: 100%;
     margin: 3px;
 }
+#search {
+    width: 70%;
+}
+@media(max-width: 980px) {
+    .forecastCard{
+        padding: 2%;
+        margin: 4%;
+    }
+}
+@media(max-width: 812px) {
+    #sBtn, #search{
+        width: 100%;
+        margin: 2%;
+    }
+}
+@media(max-width: 485px) {
+    .forecastCard{
+        padding: 2%;
+        margin: 2%;
+        width: 100%;
+    }
+}
