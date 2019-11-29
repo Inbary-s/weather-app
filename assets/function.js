@@ -1,14 +1,12 @@
 var apiKey = "bcdd23b6dd6d8821691e02632d9ffdc8";
 var cities = [];
-// var m = moment();
-// console.log(m);
 
-//   SEARCH -
+// getItem from local storage upon load
 $(document).ready(function() {
     var storageCities = localStorage.getItem('cities');
     var storageCitiesArr = (storageCities.split(','));
     console.log(storageCitiesArr);
-
+    // Rerender cities button arr
     for (var i = 0; i < storageCitiesArr.length; i++) {
         var a = $("<button>");
         a.addClass("city");
@@ -17,9 +15,10 @@ $(document).ready(function() {
         a.text(storageCitiesArr[i]);
         $(".cities").prepend(a);
         a.insertBefore(storageCitiesArr[i]);
-      }
-});
-
+      } 
+    });
+    
+// SEARCH -
 $("#sBtn").on("click", function(event) {
   event.preventDefault();
   var city = $("#search").val();
@@ -27,13 +26,13 @@ $("#sBtn").on("click", function(event) {
   renderCities();
   handleAPI($("#search").val());
 });
-
+// City buttons functionality
 $(document).on('click', '.city', function(e){
     e.preventDefault()
     console.log($(this).attr('data-name'))
     handleAPI($(this).attr('data-name'))
 })
-
+// get all weather info
 handleAPI = term => {
   var queryURLNew =
     `https://api.openweathermap.org/data/2.5/weather?q=${term}&appid=${apiKey}`;
@@ -56,8 +55,6 @@ handleAPI = term => {
     $("#cityInfo").html(cityName);
     $("#humidity").text("Humidity: " + response.main.humidity);
     $("#wind").text("Wind Speed: " + response.wind.speed);
-    // $(".icon").html(icon);
-
     // UV Index;
     console.log(temp);
     queryURLuv = "http://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=" + lat + "&lon=" + lon;
@@ -68,14 +65,14 @@ handleAPI = term => {
       console.log(response[0].value);
       $("#uv").text("UV Index: " + response[0].value);
     });
-
+    // 5 Day forecast
       var forecastTerm = (($("#search").val()) || ($('.city').attr('data-name')));
       var forecastArr = [];
       $.ajax({
         url: `http://api.openweathermap.org/data/2.5/forecast?q=${forecastTerm}&appid=${apiKey}&mode=json`,
         method: "GET"
       })
-
+      // for loop to select the hour to forecast
         .then(data => {
           for (i = 4; i < 40; i += 8) {
             forecastArr.push(data.list[i]);
@@ -84,11 +81,10 @@ handleAPI = term => {
               appendForecast(forecastArr);
             }
         }
-
     })
     .catch(err => console.log(err));
     });
-
+    //append forecast to cards
     appendForecast = arr => {
         $('#forecast').html('')
       arr.map(item => {
@@ -96,33 +92,21 @@ handleAPI = term => {
         console.log(forecastDateArr);
         var forecastDate = forecastDateArr[0];
         $("#forecast").append(`<div class='card forecastCard'><h6>${forecastDate}</h6>
-        <img src='http://openweathermap.org/img/wn/${
-          item.weather[0].icon
-        }@2x.png'>
-        <p>Temp ${parseFloat((item.main.temp - 273.15) * 1.8 + 32).toFixed(
-          2
-        )}</p>
+        <img src='http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png'>
+        <p>Temp ${parseFloat((item.main.temp - 273.15) * 1.8 + 32).toFixed(2)}</p>
         <p>Humidity: ${item.main.humidity}</p>`);
       });
     };
-
-
 };
-
+// Save to localStorage
 $("#sBtn").on("click", function(e) {
     e.preventDefault();
-  
-    localStorage.setItem("cities", cities); //works!!!!!!!!!!!
-  
+    localStorage.setItem("cities", cities); 
     console.log("you stored ", localStorage.getItem("cities", cities));
-   
   });
-
-
-
+// Render cities array
 function renderCities() {
   $(".cities").empty();
-
   for (var i = 0; i < cities.length; i++) {
     var a = $("<button>");
     a.addClass("city");
@@ -137,15 +121,3 @@ function renderCities() {
 }
 
 renderCities();
-
-//     queryURL - every time trigerred, add city to head of city list (appending to the city [])
-//     queryURL - every time trigerred, present the following data for that city:
-//     - Temp'
-//     - Humidity
-//     - Wind Speed
-//     - UV index
-//     - 5 day forecast (another ajax call?) - include:
-//         -- date
-//         -- little weather icon (sun, clouds, etc.)
-//         -- median temp'
-//         -- median humiditiy
