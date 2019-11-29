@@ -29,7 +29,8 @@ img {
 .forecastCard {
     background-color: rgba(0, 217, 255, 0.945);
     color: white;
-    padding: 20px;
+    padding: 6px;
+    margin: 3px;
     border-radius: 10px;
     float: left;
 }
