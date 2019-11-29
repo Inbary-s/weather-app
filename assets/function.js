@@ -62,8 +62,20 @@ handleAPI = term => {
       url: queryURLuv,
       method: "GET"
     }).then(function(response) {
-      console.log(response[0].value);
-      $("#uv").text("UV Index: " + response[0].value);
+      var uvIndex = (response[0].value);
+      var uvIdT = $("#uv").text("UV Index: ");
+      var uvIdNum = $("#num").text(uvIndex);
+      console.log(uvIndex);
+      uvColor();
+      function uvColor(){
+        if (uvIndex<2) {
+          $('#num').addClass('green');
+        }else if (uvIndex<6 && uvIndex>2){
+          $('#num').addClass('yellow');
+        }else if(uvIndex>6){
+          $('#num').addClass('red');
+        }
+      }
     });
     // 5 Day forecast
         var forecastTerm = ($("#search").val() || $('.city').attr('data-name'));
