@@ -48,14 +48,11 @@ handleAPI = term => {
 // if (response.status === 404){
 //   console.log('oops!');
 // };
-                if (response.status === 404) {
-                    alert("oops!")
-                }
- 
+  try {}
     $(cityInfo).empty();
     var name = response.name;
     var iconCode = response.weather[0].icon;
-    var icon = "http://openweathermap.org/img/wn/" + iconCode + "@2x.png";
+    var icon = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
     $("#icon").attr("src", icon);
     var day = moment().format("LL");
     var cityName = $("<h3>").text(name + " (" + day + ")");
@@ -67,7 +64,7 @@ handleAPI = term => {
     $("#humidity").text("Humidity: " + response.main.humidity);
     $("#wind").text("Wind Speed: " + response.wind.speed);
     // UV Index;
-    queryURLuv = "http://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=" + lat + "&lon=" + lon;
+    queryURLuv = "https://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=" + lat + "&lon=" + lon;
     $.ajax({
       url: queryURLuv,
       method: "GET"
