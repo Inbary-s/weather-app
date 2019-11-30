@@ -1,11 +1,11 @@
 var apiKey = "bcdd23b6dd6d8821691e02632d9ffdc8";
 var cities = [];
-var storageCities = localStorage.getItem('cities');
-var storageCitiesArr = (storageCities.split(','));
- 
+
 // getItem from local storage upon load
 $(document).ready(function() {
-    // Rerender cities button arr
+  // Rerender cities button arr
+  var storageCities = localStorage.getItem('cities');
+  var storageCitiesArr = (storageCities.split(','));
     for (var i = 0; i < storageCitiesArr.length; i++) {
         var a = $("<button>");
         a.addClass("city");
