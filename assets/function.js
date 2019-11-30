@@ -71,47 +71,53 @@ handleAPI = term => {
       uvColor();
       function uvColor(){
         if (uvIndex<2) {
-          $('#num').addClass('green');
+          $('#num').css('background-color', 'rgba(0, 128, 0, 0.63)');
+          // $('#num').addClass('green');
         }else if (uvIndex<6 && uvIndex>2){
-          $('#num').addClass('yellow');
+          $('#num').css('background', 'rgba(255, 208, 0, 0.658)');
+          // $('#num').addClass('yellow');
         }else if(uvIndex>6){
-          $('#num').addClass('red');
+          $('#num').css('background', 'rgba(255, 0, 0, 0.616)');
+          // $('#num').addClass('red');
         }
       }
-      // 5 Day forecast
-          var forecastTerm = ($("#search").val() || $('.city').attr('data-name'));
-          var forecastArr = [];
-  
-          $.ajax({
-              url: `http://api.openweathermap.org/data/2.5/forecast?q=${forecastTerm}&appid=${apiKey}&mode=json`,
-              method: "GET"
-          })
-          .then(data => {
-              for (i = 5; i < 40; i += 8) {
-                  forecastArr.push(data.list[i]);
-                  if (i === 37) {
-                      console.log(forecastArr);
-                      appendForecast(forecastArr);
-                  }
-              }
-          })
-          // for loop to select the hour to forecast
-          .catch(err => console.log(err));
-      });
-      //append forecast to cards
-      appendForecast = arr => {
-          $('#forecast').html('')
-          arr.map(item => {
-              var forecastDateArr = ((item.dt_txt).split(' '));
-              console.log(forecastDateArr);
-              var forecastDate = forecastDateArr[0];
-              $("#forecast").append(`<div class='card forecastCard'><h6>${forecastDate}</h6>
-              <img src='http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png'>
-              <p>Temp ${parseFloat((item.main.temp - 273.15) * 1.8 + 32).toFixed(2)}</p>
-              <p>Humidity: ${item.main.humidity}</p>`);
-          });
-      };
     });
+    // 5 Day forecast
+        var forecastTerm = (response.name);
+        // var forecastTerm = ($('#sBtn').val() || $('.city').attr('data-name'));
+        var forecastArr = [];
+        console.log(forecastTerm);
+        console.log($('#search').val());
+        console.log($('.city').attr('data-name'));
+        $.ajax({
+            url: `http://api.openweathermap.org/data/2.5/forecast?q=${forecastTerm}&appid=${apiKey}&mode=json`,
+            method: "GET"
+        })
+        .then(data => {
+            for (i = 5; i < 40; i += 8) {
+                forecastArr.push(data.list[i]);
+                if (i === 37) {
+                    console.log(forecastArr);
+                    appendForecast(forecastArr);
+                }
+            }
+        })
+        // for loop to select the hour to forecast
+        .catch(err => console.log(err));
+    });
+    //append forecast to cards
+    appendForecast = arr => {
+        $('#forecast').html('')
+        arr.map(item => {
+            var forecastDateArr = ((item.dt_txt).split(' '));
+            console.log(forecastDateArr);
+            var forecastDate = forecastDateArr[0];
+            $("#forecast").append(`<div class='card forecastCard'><h6>${forecastDate}</h6>
+            <img src='http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png'>
+            <p>Temp ${parseFloat((item.main.temp - 273.15) * 1.8 + 32).toFixed(2)}</p>
+            <p>Humidity: ${item.main.humidity}</p>`);
+        });
+  };
 };
 // Render cities array
 function renderCities() {

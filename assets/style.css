@@ -73,8 +73,6 @@ img {
     padding: 5px;
 }
 #uv {
-    /* top: 75%; */
-    z-index: 1;
     position: relative;
     padding: 0;
 }
@@ -84,15 +82,6 @@ img {
     width: 70px;
     border-radius: 10px;
     box-shadow: 4px 2px 2px 0 rgba(40, 37, 44, 0.432);
-}
-.yellow {
-    background-color: rgba(255, 208, 0, 0.658);
-}
-.red {
-    background-color: rgba(255, 0, 0, 0.616);
-}
-.green {
-    background-color: rgba(0, 128, 0, 0.63);
 }
 @media(max-width: 980px) {
     .forecastCard{
