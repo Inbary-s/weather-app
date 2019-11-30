@@ -48,7 +48,7 @@ handleAPI = term => {
 // if (response.status === 404){
 //   console.log('oops!');
 // };
-  try {}
+
     $(cityInfo).empty();
     var name = response.name;
     var iconCode = response.weather[0].icon;
