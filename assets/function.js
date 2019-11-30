@@ -2,29 +2,34 @@ var apiKey = "bcdd23b6dd6d8821691e02632d9ffdc8";
 var cities = [];
 
 // getItem from local storage upon load
-$(document).ready(function() {
-  // Rerender cities button arr
-  var storageCities = localStorage.getItem('cities');
-  var storageCitiesArr = (storageCities.split(','));
-    for (var i = 0; i < storageCitiesArr.length; i++) {
-        var a = $("<button>");
-        a.addClass("city");
-        a.addClass('btn');
-        a.attr("data-name", storageCitiesArr[i]);
-        a.text(storageCitiesArr[i]);
-        $(".cities").prepend(a);
-        a.insertBefore(storageCitiesArr[i]);
-      } 
-    });
-// SEARCH -
-$("#sBtn").on("click", function(event) {
-  event.preventDefault();
-  var city = $("#search").val();
-  cities.push(city);
-  renderCities();
-  handleAPI($("#search").val());
-  // Save to localStorage
-  localStorage.setItem("cities", cities); 
+function onLoad(){
+  if (typeof cities !== undefined && cities !== null){
+    $(document).ready(function() {
+      var storageCities = localStorage.getItem('cities');
+      var storageCitiesArr = (storageCities.split(','));
+      // Rerender cities button arr
+        for (var i = 0; i < storageCitiesArr.length; i++) {
+            var a = $("<button>");
+            a.addClass("city");
+            a.addClass('btn');
+            a.attr("data-name", storageCitiesArr[i]);
+            a.text(storageCitiesArr[i]);
+            $(".cities").prepend(a);
+            a.insertBefore(storageCitiesArr[i]);
+          } 
+        });
+    }
+  }
+  onLoad(); 
+  // SEARCH -
+  $("#sBtn").on("click", function(event) {
+    event.preventDefault();
+    var city = $("#search").val();
+    cities.push(city);
+    renderCities();
+    handleAPI($("#search").val());
+    // Save to localStorage
+    localStorage.setItem("cities", cities); 
 });
 // City buttons functionality
 $(document).on('click', '.city', function(e){
@@ -39,6 +44,14 @@ handleAPI = term => {
     url: queryURLNew,
     method: "GET"
   }).then(function(response) {
+// // Err
+// if (response.status === 404){
+//   console.log('oops!');
+// };
+                if (response.status === 404) {
+                    alert("oops!")
+                }
+ 
     $(cityInfo).empty();
     var name = response.name;
     var iconCode = response.weather[0].icon;
@@ -78,6 +91,7 @@ handleAPI = term => {
             url: `http://api.openweathermap.org/data/2.5/forecast?q=${forecastTerm}&appid=${apiKey}&mode=json`,
             method: "GET"
         })
+        // for loop to select the hour to forecast
         .then(data => {
             for (i = 5; i < 40; i += 8) {
                 forecastArr.push(data.list[i]);
@@ -86,7 +100,6 @@ handleAPI = term => {
                 }
             }
         })
-        // for loop to select the hour to forecast
         .catch(err => console.log(err));
     });
     //append forecast to cards
