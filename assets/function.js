@@ -85,7 +85,7 @@ handleAPI = term => {
         var forecastTerm = (response.name);
         var forecastArr = [];
         $.ajax({
-            url: `http://api.openweathermap.org/data/2.5/forecast?q=${forecastTerm}&appid=${apiKey}&mode=json`,
+            url: `https://api.openweathermap.org/data/2.5/forecast?q=${forecastTerm}&appid=${apiKey}&mode=json`,
             method: "GET"
         })
         // for loop to select the hour to forecast
@@ -106,7 +106,7 @@ handleAPI = term => {
             var forecastDateArr = ((item.dt_txt).split(' '));
             var forecastDate = forecastDateArr[0];
             $("#forecast").append(`<div class='card forecastCard'><h6>${forecastDate}</h6>
-            <img src='http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png'>
+            <img src='https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png'>
             <p>Temp ${parseFloat((item.main.temp - 273.15) * 1.8 + 32).toFixed(2)}</p>
             <p>Humidity: ${item.main.humidity}</p>`);
         });
