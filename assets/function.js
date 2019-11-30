@@ -44,11 +44,6 @@ handleAPI = term => {
     url: queryURLNew,
     method: "GET"
   }).then(function(response) {
-// // Err
-// if (response.status === 404){
-//   console.log('oops!');
-// };
-
     $(cityInfo).empty();
     var name = response.name;
     var iconCode = response.weather[0].icon;
@@ -71,6 +66,8 @@ handleAPI = term => {
     }).then(function(response) {
       var uvIndex = (response[0].value);
       uvColor();
+      $("#uv").text("UV Index: ");
+      $("#num").text(uvIndex);
       function uvColor(){
         if (uvIndex<2) {
           $('#num').css('background-color', 'rgba(0, 128, 0, 0.63)');
